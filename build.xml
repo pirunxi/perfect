@@ -1,0 +1,30 @@
+<project name="perfect-core" default="dist">
+	<property name="class" location="tempclasses"/>
+	<property name="lib" location="libs"/>
+	<target name="init">
+		<mkdir dir="${class}" />
+	</target>
+
+	<target name="compile" depends="init">
+		<path id="classpath">
+			<fileset dir="${lib}">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+		<javac encoding="UTF8" srcdir="src" destdir="${class}" includeantruntime="false" classpathref="classpath">
+			<compilerarg line="-Xlint:unchecked" />
+			<exclude name="test/**"/>
+		</javac>
+	</target>
+
+	<target name="clean">
+		<delete dir="${class}" />
+	</target>
+
+	<target name="dist" depends="clean, compile">
+		<jar destfile="perfect-core.jar" basedir="${class}">
+			<zipgroupfileset dir="${lib}" includes="log4j-*.jar,netty-all-4.1.8.Final.jar,pcollections.jar,slf4j-*.jar,javassist.jar,bdb.jar" />
+		</jar>
+		<delete dir="${class}"/>
+	</target>
+</project>
