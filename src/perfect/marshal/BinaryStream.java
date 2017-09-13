@@ -333,7 +333,7 @@ public class BinaryStream {
             } else if(x < 0x10000000) {
                 byteBuf.writeInt(x | 0xe0000000);
             } else {
-                new RuntimeException("exceed max unit");
+                throw new RuntimeException("exceed max unit");
             }
         }
     }
